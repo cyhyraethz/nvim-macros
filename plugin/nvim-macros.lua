@@ -13,3 +13,7 @@ end, {})
 vim.api.nvim_create_user_command("MacroDelete", function()
 	require("nvim-macros").delete_macro()
 end, {})
+
+vim.api.nvim_create_user_command("MacroEdit", function()
+	require("nvim-macros").edit_macro()
+end, {})

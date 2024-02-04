@@ -108,6 +108,44 @@ M.save_macro = function(register)
 	end
 end
 
+-- Edit macro name and content
+M.edit_macro = function()
+	local macros = json.handle_json_file(config.json_formatter, config.json_file_path, "r")
+	if not macros or not macros.macros or #macros.macros == 0 then
+		util.print_error("No macros to edit.")
+		return
+	end
+
+	local choices = {}
+	local name_to_index_map = {}
+	for index, macro in ipairs(macros.macros) do
+		if macro.name then
+			local display_text = macro.name .. " | " .. string.sub(macro.content, 1, 150)
+			table.insert(choices, display_text)
+			name_to_index_map[display_text] = index
+		end
+	end
+
+	if next(choices) == nil then
+		util.print_error("No valid macros to edit.")
+		return
+	end
+
+	vim.ui.select(choices, { prompt = "Select a macro to edit:" }, function(choice)
+		if not choice then
+			util.print_error("Macro editing cancelled.")
+			return
+		end
+
+		local macro_index = name_to_index_map[choice]
+		local macro_name = macros.macros[macro_index].name
+		if not macro_index then
+			util.print_error("Selected macro `" .. choice .. "` is invalid.")
+			return
+		end
+	end)
+end
+
 -- Delete macro from JSON file
 M.delete_macro = function()
 	local macros = json.handle_json_file(config.json_formatter, config.json_file_path, "r")
