@@ -1,3 +1,4 @@
+-- vim:shiftwidth=8:softtabstop=8:noexpandtab
 local M = {}
 
 local extract = _G.bit32 and _G.bit32.extract -- Lua 5.2/Lua 5.3 in compatibility mode
@@ -148,7 +149,12 @@ M.enc = function(str, encoder, usecaching)
 	if lastn == 2 then
 		local a, b = str:byte(n - 1, n)
 		local v = a * 0x10000 + b * 0x100
-		t[k] = char(encoder[extract(v, 18, 6)], encoder[extract(v, 12, 6)], encoder[extract(v, 6, 6)], encoder[64])
+		t[k] = char(
+			encoder[extract(v, 18, 6)],
+			encoder[extract(v, 12, 6)],
+			encoder[extract(v, 6, 6)],
+			encoder[64]
+		)
 	elseif lastn == 1 then
 		local v = str:byte(n) * 0x10000
 		t[k] = char(encoder[extract(v, 18, 6)], encoder[extract(v, 12, 6)], encoder[64], encoder[64])

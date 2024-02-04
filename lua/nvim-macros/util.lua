@@ -1,3 +1,4 @@
+-- vim:shiftwidth=8:softtabstop=8:noexpandtab
 local base64 = require("nvim-macros.base64")
 
 local M = {}
@@ -36,7 +37,9 @@ M.get_register_input = function(prompt, default_register)
 
 	while not (register:match("^" .. valid_registers .. "$") or register == "") do
 		M.print_error(
-			"Invalid register: `" .. register .. "`. Register must be a single lowercase letter or number 1-9."
+			"Invalid register: `"
+				.. register
+				.. "`. Register must be a single lowercase letter or number 1-9."
 		)
 		register = vim.fn.input(prompt)
 	end

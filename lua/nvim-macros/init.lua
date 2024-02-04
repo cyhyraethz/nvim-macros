@@ -1,3 +1,4 @@
+-- vim:shiftwidth=8:softtabstop=8:noexpandtab
 local base64 = require("nvim-macros.base64")
 local util = require("nvim-macros.util")
 local json = require("nvim-macros.json")
@@ -38,7 +39,9 @@ M.yank = function(register)
 
 	while not (register:match("^" .. valid_registers .. "$")) do
 		util.print_error(
-			"Invalid register: `" .. register .. "`. Register must be a single lowercase letter or number 1-9."
+			"Invalid register: `"
+				.. register
+				.. "`. Register must be a single lowercase letter or number 1-9."
 		)
 
 		register = util.get_register_input("Specify a register to yank from: ", config.default_macro_register)
@@ -74,7 +77,9 @@ M.save_macro = function(register)
 
 	while not (register:match("^" .. valid_registers .. "$")) do
 		util.print_error(
-			"Invalid register: `" .. register .. "`. Register must be a single lowercase letter or number 1-9."
+			"Invalid register: `"
+				.. register
+				.. "`. Register must be a single lowercase letter or number 1-9."
 		)
 
 		register = util.get_register_input("Specify a register to save from: ", config.default_macro_register)
@@ -194,8 +199,10 @@ M.select_and_yank_macro = function()
 			util.print_message("Yanked macro `" .. macro_name .. "` to clipboard.")
 		elseif yank_option == "2" then
 			local valid_registers = "[a-z0-9]"
-			local target_register =
-				util.get_register_input("Specify a register to yank the raw macro to: ", config.default_macro_register)
+			local target_register = util.get_register_input(
+				"Specify a register to yank the raw macro to: ",
+				config.default_macro_register
+			)
 
 			while not (target_register:match("^" .. valid_registers .. "$")) do
 				util.print_error(
@@ -211,7 +218,9 @@ M.select_and_yank_macro = function()
 			end
 
 			util.set_decoded_macro_to_register(encoded_content, target_register)
-			util.print_message("Yanked raw macro `" .. macro_name .. "` into register `" .. target_register .. "`.")
+			util.print_message(
+				"Yanked raw macro `" .. macro_name .. "` into register `" .. target_register .. "`."
+			)
 		else
 			util.print_error("Invalid yank option selected.")
 		end

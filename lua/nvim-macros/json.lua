@@ -1,3 +1,4 @@
+-- vim:shiftwidth=8:softtabstop=8:noexpandtab
 local util = require("nvim-macros.util")
 
 local M = {}
@@ -158,7 +159,9 @@ M.handle_json_file = function(json_formatter, json_file_path, mode, data)
 						util.print_info("Successfully restored from backup.")
 						return M.handle_json_file(json_formatter, json_file_path, mode, data)
 					else
-						util.print_error("Failed to restore from backup. Manual check required.")
+						util.print_error(
+							"Failed to restore from backup. Manual check required."
+						)
 						return nil
 					end
 				end
@@ -174,13 +177,16 @@ M.handle_json_file = function(json_formatter, json_file_path, mode, data)
 			return nil
 		end
 
-		local content = (json_formatter == "jq" or json_formatter == "yq") and pretty_print_json(data, json_formatter)
+		local content = (json_formatter == "jq" or json_formatter == "yq")
+				and pretty_print_json(data, json_formatter)
 			or vim.fn.json_encode(data)
 		file:write(content)
 		file:close()
 
 		if not os.rename(file_path, backup_file_path) or not os.rename(temp_file_path, file_path) then
-			util.print_error("Failed to update the macros file. Attempting to restore from the most recent backup.")
+			util.print_error(
+				"Failed to update the macros file. Attempting to restore from the most recent backup."
+			)
 			local latest_backup = get_latest_backup(backup_dir)
 			if latest_backup and restore_from_backup(latest_backup, file_path) then
 				util.print_info("Successfully restored from backup.")
