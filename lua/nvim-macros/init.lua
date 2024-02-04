@@ -143,6 +143,16 @@ M.edit_macro = function()
 			util.print_error("Selected macro `" .. choice .. "` is invalid.")
 			return
 		end
+
+		-- ╭── TODO ───────────────────────────────────────────────────────────────────────────────╮
+		-- │                                                                                       │
+		-- │   Open selected macro content in buffer                                               │
+		-- │   Display legend on side or bottom with keycode names                                 │
+		-- │   Save edited macro on write quit buffer (if there are changes)                       │
+		-- │   Do not save edited macro if quit buffer without writing (or no changes)             │
+		-- │   Prompt user for macro name before saving (with current name filled in by default)   │
+		-- │                                                                                       │
+		-- ╰───────────────────────────────────────────────────────────────────────────────────────╯
 	end)
 end
 
